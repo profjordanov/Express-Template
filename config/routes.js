@@ -4,7 +4,12 @@ const restrictedPages = require('./auth')
 module.exports = app => {
   app.get('/', controllers.home.index)
 
-  app.get('/about', restrictedPages.hasRole('Admin'), controllers.home.about)
+  app.get('/thread/:username', restrictedPages.isAuthed, controllers.thread.displayThread)
+  app.post('/thread/:username', restrictedPages.isAuthed, controllers.thread.addMessage)
+  app.post('/like/:username/:id', restrictedPages.isAuthed, controllers.thread.likeMessage)
+  app.post('/dislike/:username/:id', restrictedPages.isAuthed, controllers.thread.dislikeMessage)
+  app.post('/block/:username', restrictedPages.isAuthed, controllers.user.block)
+  app.post('/unblock/:username', restrictedPages.isAuthed, controllers.user.unblock)
 
   app.get('/register', controllers.user.registerGet)
   app.post('/register', controllers.user.registerPost)

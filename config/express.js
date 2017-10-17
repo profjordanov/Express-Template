@@ -4,10 +4,12 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
+const helpers = require('./helpers')
 
 module.exports = app => {
   app.engine('.hbs', handlebars({
     defaultLayout: 'main',
+    helpers: helpers,
     extname: '.hbs'
   }))
 
